@@ -1,0 +1,63 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Participant {
+  id           String     @id @default(cuid())
+  name         String
+  ic           String?    // Format paparan asal / apa yang admin masukkan
+  icNormalized String?    @unique // Nilai 12 digit atau nilai bersih tanpa tanda sempang (hanya jika ada, null jika tiada)
+  size         String     // Contoh: S, M, L, XL, XXL, XXXL
+  roomId       String?
+  room         Room?      @relation(fields: [roomId], references: [id], onDelete: SetNull)
+  teamId       String?
+  team         Team?      @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  remarks      String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([roomId])
+  @@index([teamId])
+}
+
+model Room {
+  id           String        @id @default(cuid())
+  name         String
+  capacity     Int
+  participants Participant[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Team {
+  id           String        @id @default(cuid())
+  name         String
+  color        String        // Contoh: #ef4444, #3b82f6
+  capacity     Int
+  participants Participant[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model ShirtSize {
+  id        String   @id @default(cuid())
+  name      String   @unique // Contoh: S, M, L, XL, XXL, XXXL
+  color     String   // Badge color hex atau tailwind color
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
