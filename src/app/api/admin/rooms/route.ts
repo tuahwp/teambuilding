@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { naturalSortByName } from "@/lib/sort";
 
 export async function GET() {
   const isAuth = await getSession();
@@ -19,10 +20,11 @@ export async function GET() {
           select: { participants: true },
         },
       },
-      orderBy: { name: "asc" },
     });
 
-    return NextResponse.json(rooms);
+    const sortedRooms = naturalSortByName(rooms);
+
+    return NextResponse.json(sortedRooms);
   } catch (error) {
     console.error("List rooms error:", error);
     return NextResponse.json({ error: "Ralat semasa memuat senarai bilik." }, { status: 500 });
@@ -61,4 +63,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Ralat semasa menambah bilik." }, { status: 500 });
   }
 }
-

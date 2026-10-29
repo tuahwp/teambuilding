@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { naturalSortByName } from "@/lib/sort";
 
 export async function GET() {
   const isAuth = await getSession();
@@ -19,10 +20,11 @@ export async function GET() {
           select: { participants: true },
         },
       },
-      orderBy: { name: "asc" },
     });
 
-    return NextResponse.json(teams);
+    const sortedTeams = naturalSortByName(teams);
+
+    return NextResponse.json(sortedTeams);
   } catch (error) {
     console.error("List teams error:", error);
     return NextResponse.json({ error: "Ralat semasa memuat senarai kumpulan." }, { status: 500 });
@@ -62,4 +64,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Ralat semasa menambah kumpulan." }, { status: 500 });
   }
 }
-

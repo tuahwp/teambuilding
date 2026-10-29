@@ -19,6 +19,7 @@ import {
   X,
   ExternalLink,
 } from "lucide-react";
+import { naturalSortByName } from "@/lib/sort";
 
 type Participant = {
   id: string;
@@ -396,6 +397,10 @@ export default function AdminDashboard() {
       return true;
     });
   }, [participants, searchQuery, sizeFilter, roomFilter, teamFilter]);
+
+  // Natural sort for rooms and teams (Bilik 1, 2, ..., 10)
+  const sortedRooms = useMemo(() => naturalSortByName(rooms), [rooms]);
+  const sortedTeams = useMemo(() => naturalSortByName(teams), [teams]);
 
   // Color map for size badges
   const sizeColorMap = useMemo(() => {
@@ -781,7 +786,7 @@ export default function AdminDashboard() {
                               className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px]"
                             >
                               <option value="">Room (Belum)</option>
-                              {rooms.map((r) => {
+                              {sortedRooms.map((r) => {
                                 const isCurrent = p.roomId === r.id;
                                 const isFull = r._count.participants >= r.capacity;
                                 return (
@@ -809,7 +814,7 @@ export default function AdminDashboard() {
                               className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px]"
                             >
                               <option value="">Team (Belum)</option>
-                              {teams.map((t) => {
+                              {sortedTeams.map((t) => {
                                 const isCurrent = p.teamId === t.id;
                                 const isFull = t._count.participants >= t.capacity;
                                 return (
@@ -923,7 +928,7 @@ export default function AdminDashboard() {
                             className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                           >
                             <option value="">Room (Belum Ditetapkan)</option>
-                            {rooms.map((r) => {
+                            {sortedRooms.map((r) => {
                               const isCurrent = p.roomId === r.id;
                               const isFull = r._count.participants >= r.capacity;
                               return (
@@ -952,7 +957,7 @@ export default function AdminDashboard() {
                             className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                           >
                             <option value="">Team (Belum Ditetapkan)</option>
-                            {teams.map((t) => {
+                            {sortedTeams.map((t) => {
                               const isCurrent = p.teamId === t.id;
                               const isFull = t._count.participants >= t.capacity;
                               return (
@@ -1060,7 +1065,7 @@ export default function AdminDashboard() {
                           className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                         >
                           <option value="">Belum Ada Bilik</option>
-                          {rooms.map((r) => {
+                          {sortedRooms.map((r) => {
                             const isCurrent = p.roomId === r.id;
                             const isFull = r._count.participants >= r.capacity;
                             return (
@@ -1089,7 +1094,7 @@ export default function AdminDashboard() {
                           className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                         >
                           <option value="">Belum Ada Team</option>
-                          {teams.map((t) => {
+                          {sortedTeams.map((t) => {
                             const isCurrent = p.teamId === t.id;
                             const isFull = t._count.participants >= t.capacity;
                             return (
@@ -1177,7 +1182,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {rooms.map((r) => {
+              {sortedRooms.map((r) => {
                 const count = r._count.participants;
                 const isFull = count >= r.capacity;
                 const pct = Math.min(100, Math.round((count / r.capacity) * 100));
@@ -1313,7 +1318,7 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {teams.map((t) => {
+              {sortedTeams.map((t) => {
                 const count = t._count.participants;
                 const isFull = count >= t.capacity;
                 const pct = Math.min(100, Math.round((count / t.capacity) * 100));
@@ -1624,7 +1629,7 @@ export default function AdminDashboard() {
                     className="w-full rounded-2xl border border-slate-300 px-3.5 py-3 text-sm font-semibold text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                   >
                     <option value="">Belum Ditetapkan</option>
-                    {rooms.map((r) => {
+                    {sortedRooms.map((r) => {
                       const isCurrent = editingParticipant?.roomId === r.id;
                       const isFull = r._count.participants >= r.capacity;
                       return (
@@ -1653,7 +1658,7 @@ export default function AdminDashboard() {
                     className="w-full rounded-2xl border border-slate-300 px-3.5 py-3 text-sm font-semibold text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                   >
                     <option value="">Belum Ditetapkan</option>
-                    {teams.map((t) => {
+                    {sortedTeams.map((t) => {
                       const isCurrent = editingParticipant?.teamId === t.id;
                       const isFull = t._count.participants >= t.capacity;
                       return (
