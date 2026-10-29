@@ -12,9 +12,9 @@ function getSecretKey() {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect /admin routes
-  if (pathname.startsWith("/admin")) {
-    const isLoginPage = pathname === "/admin/login";
+  // Lindungi laluan /urusetia
+  if (pathname.startsWith("/urusetia")) {
+    const isLoginPage = pathname === "/urusetia/login";
     const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
 
     let isAuthenticated = false;
@@ -30,13 +30,13 @@ export async function middleware(request: NextRequest) {
     }
 
     if (!isAuthenticated && !isLoginPage) {
-      const loginUrl = new URL("/admin/login", request.url);
+      const loginUrl = new URL("/urusetia/login", request.url);
       return NextResponse.redirect(loginUrl);
     }
 
     if (isAuthenticated && isLoginPage) {
-      const adminUrl = new URL("/admin", request.url);
-      return NextResponse.redirect(adminUrl);
+      const dashboardUrl = new URL("/urusetia", request.url);
+      return NextResponse.redirect(dashboardUrl);
     }
   }
 
@@ -44,6 +44,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/urusetia/:path*"],
 };
-

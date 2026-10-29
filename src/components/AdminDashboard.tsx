@@ -139,7 +139,7 @@ export default function AdminDashboard() {
       ]);
 
       if (resStats.status === 401 || resParts.status === 401) {
-        router.push("/admin/login");
+        router.push("/urusetia/login");
         return;
       }
 
@@ -172,10 +172,10 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/logout", { method: "POST" });
-      router.push("/admin/login");
+      router.push("/urusetia/login");
       router.refresh();
     } catch {
-      router.push("/admin/login");
+      router.push("/urusetia/login");
     }
   };
 
@@ -423,122 +423,126 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-16">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 rounded-xl border bg-white px-4 py-3 shadow-lg transition-all animate-in fade-in slide-in-from-top-4 max-w-md">
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 rounded-2xl border bg-white px-4 py-3 shadow-xl transition-all animate-in fade-in slide-in-from-top-4 max-w-md">
           {toast.type === "success" ? (
             <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
           ) : (
             <AlertCircle className="h-5 w-5 text-rose-500 shrink-0" />
           )}
-          <span className="text-sm font-medium text-slate-800">{toast.message}</span>
+          <span className="text-sm font-semibold text-slate-800">{toast.message}</span>
           <button
             onClick={() => setToast(null)}
-            className="ml-auto text-slate-400 hover:text-slate-600 p-1"
+            className="ml-auto text-slate-400 hover:text-slate-600 p-1.5 min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
       )}
 
-      {/* Main Container */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
-        {/* Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold tracking-wider text-blue-600 uppercase">
-                EVENT LOGISTICS
-              </span>
-              <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                Admin
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 mt-1">
-              Room & Team Allocation
-            </h1>
-          </div>
-
-          {/* Navigation Pill (Rooms, Teams, Directory, Settings) */}
-          <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
-            <div className="inline-flex rounded-xl bg-white p-1 border border-slate-200 shadow-sm">
-              <button
-                onClick={() => setActiveTab("rooms")}
-                className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all ${
-                  activeTab === "rooms"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <Bed className="h-4 w-4" />
-                <span>Rooms</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("teams")}
-                className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all ${
-                  activeTab === "teams"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <Users className="h-4 w-4" />
-                <span>Teams</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("directory")}
-                className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all ${
-                  activeTab === "directory"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <ListFilter className="h-4 w-4" />
-                <span>Directory</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab("settings")}
-                title="Tetapan Saiz Baju & Sistem"
-                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition-all ${
-                  activeTab === "settings"
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <SettingsIcon className="h-4 w-4" />
-                <span className="hidden sm:inline">Settings</span>
-              </button>
+      {/* STICKY HEADER & TABS BAR */}
+      <header className="sticky top-0 z-30 bg-slate-50/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-extrabold tracking-wider text-blue-600 uppercase">
+                  EVENT LOGISTICS
+                </span>
+                <span className="inline-flex items-center rounded-full bg-blue-100/80 px-2.5 py-0.5 text-[10px] font-bold text-blue-700">
+                  Urusetia
+                </span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 mt-0.5">
+                Room & Team Allocation
+              </h1>
             </div>
 
-            {/* Quick Public Link & Logout */}
-            <div className="flex items-center gap-1 pl-1">
-              <Link
-                href="/semak"
-                target="_blank"
-                title="Buka Halaman Semakan Awam"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:text-blue-600 hover:border-blue-300 shadow-sm transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-              </Link>
-              <button
-                onClick={handleLogout}
-                title="Log Keluar"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:text-rose-600 hover:border-rose-300 shadow-sm transition-colors"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
+            {/* Navigation Tabs Pill (min-h-[44px] tap targets) */}
+            <div className="flex flex-wrap items-center gap-2">
+              <nav aria-label="Tab navigasi urusetia" className="inline-flex rounded-2xl bg-white p-1 border border-slate-200/90 shadow-xs">
+                <button
+                  onClick={() => setActiveTab("rooms")}
+                  className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold min-h-[44px] transition-all ${
+                    activeTab === "rooms"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <Bed className="h-4 w-4" />
+                  <span>Rooms</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("teams")}
+                  className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold min-h-[44px] transition-all ${
+                    activeTab === "teams"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <Users className="h-4 w-4" />
+                  <span>Teams</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("directory")}
+                  className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold min-h-[44px] transition-all ${
+                    activeTab === "directory"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <ListFilter className="h-4 w-4" />
+                  <span>Directory</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab("settings")}
+                  title="Tetapan Saiz Baju & Sistem"
+                  className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs sm:text-sm font-bold min-h-[44px] transition-all ${
+                    activeTab === "settings"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <SettingsIcon className="h-4 w-4" />
+                  <span className="hidden sm:inline">Settings</span>
+                </button>
+              </nav>
+
+              {/* Quick Public Preview & Logout */}
+              <div className="flex items-center gap-1.5 pl-1">
+                <Link
+                  href="/"
+                  target="_blank"
+                  title="Lihat Halaman Semakan Awam (Buka tab baru)"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 hover:text-blue-600 hover:border-blue-300 shadow-xs transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  title="Log Keluar Urusetia"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 hover:text-rose-600 hover:border-rose-300 shadow-xs transition-colors"
+                >
+                  <LogOut className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </header>
 
+      {/* Main Container */}
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-5">
         {/* TOP SUMMARY CARD (Kad Ringkasan) */}
         {stats && (
-          <div className="mb-6 rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-sm">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="mb-6 rounded-3xl border border-slate-200/90 bg-white p-5 sm:p-6 shadow-xs">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
               {/* Total Participants */}
               <div className="flex items-center gap-4 shrink-0 lg:pr-8 lg:border-r border-slate-100">
                 <div>
-                  <span className="text-xs font-semibold text-slate-500 block">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                     Participants
                   </span>
                   <span className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -550,21 +554,21 @@ export default function AdminDashboard() {
               {/* Progress Bars (Room & Team Allocation) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
                 {/* Room Allocation */}
-                <div>
-                  <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
+                <div className="rounded-2xl bg-slate-50/70 p-3 border border-slate-100">
+                  <div className="flex items-center justify-between text-xs font-bold mb-1.5">
                     <span className="text-slate-600">Room allocation</span>
-                    <span className="text-slate-900 font-bold">
+                    <span className="text-slate-900 font-extrabold">
                       {stats.roomAllocationPercent}%
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-2.5 w-full rounded-full bg-slate-200/80 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-indigo-500 transition-all duration-500"
                       style={{ width: `${stats.roomAllocationPercent}%` }}
                     />
                   </div>
                   <div className="mt-1.5 text-[11px] text-slate-500">
-                    <span className="font-medium text-slate-700">
+                    <span className="font-bold text-slate-700">
                       {stats.roomAssignedCount} assigned
                     </span>{" "}
                     · {stats.roomPendingCount} pending
@@ -572,21 +576,21 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Team Allocation */}
-                <div>
-                  <div className="flex items-center justify-between text-xs font-semibold mb-1.5">
+                <div className="rounded-2xl bg-slate-50/70 p-3 border border-slate-100">
+                  <div className="flex items-center justify-between text-xs font-bold mb-1.5">
                     <span className="text-slate-600">Team allocation</span>
-                    <span className="text-slate-900 font-bold">
+                    <span className="text-slate-900 font-extrabold">
                       {stats.teamAllocationPercent}%
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                  <div className="h-2.5 w-full rounded-full bg-slate-200/80 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-blue-500 transition-all duration-500"
                       style={{ width: `${stats.teamAllocationPercent}%` }}
                     />
                   </div>
                   <div className="mt-1.5 text-[11px] text-slate-500">
-                    <span className="font-medium text-slate-700">
+                    <span className="font-bold text-slate-700">
                       {stats.teamAssignedCount} assigned
                     </span>{" "}
                     · {stats.teamPendingCount} pending
@@ -595,19 +599,19 @@ export default function AdminDashboard() {
               </div>
 
               {/* Shirt Size Badges Row */}
-              <div className="flex flex-wrap items-center gap-2 shrink-0 lg:pl-8 lg:border-l border-slate-100">
+              <div className="flex flex-wrap items-center gap-2 shrink-0 lg:pl-6 lg:border-l border-slate-100">
                 {stats.sizes.map((s) => (
                   <div
                     key={s.name}
-                    className="inline-flex items-center overflow-hidden rounded-lg border border-slate-200 text-xs font-bold shadow-xs bg-slate-50"
+                    className="inline-flex items-center overflow-hidden rounded-xl border border-slate-200 text-xs font-bold shadow-xs bg-slate-50 min-h-[36px]"
                   >
                     <span
-                      className="px-2 py-1 text-white font-extrabold text-[11px]"
+                      className="px-2.5 py-1.5 text-white font-extrabold text-[11px]"
                       style={{ backgroundColor: s.color }}
                     >
                       {s.name}
                     </span>
-                    <span className="px-2 py-1 text-slate-700 bg-white">
+                    <span className="px-2.5 py-1.5 text-slate-700 bg-white font-mono">
                       {s.count}
                     </span>
                   </div>
@@ -620,36 +624,37 @@ export default function AdminDashboard() {
         {/* TAB 1: DIRECTORY */}
         {activeTab === "directory" && (
           <div>
-            {/* Filter & Action Bar */}
+            {/* Filter & Action Toolbar (wraps neatly, min-h-[44px] targets) */}
             <div className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
               {/* Search Box */}
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Search name or IC number"
+                  placeholder="Cari nama atau nombor IC..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
+                  className="w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all min-h-[44px]"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+                    aria-label="Kosongkan carian"
+                    className="absolute right-2 top-2 text-slate-400 hover:text-slate-600 h-8 w-8 flex items-center justify-center rounded-lg"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 )}
               </div>
 
-              {/* Dropdown Filters & Action Buttons */}
+              {/* Dropdown Filters & Actions */}
               <div className="flex flex-wrap items-center gap-2">
                 {/* Size Filter */}
                 <select
                   value={sizeFilter}
                   onChange={(e) => setSizeFilter(e.target.value)}
                   aria-label="Filter saiz baju"
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="rounded-2xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 min-h-[44px]"
                 >
                   <option value="ALL">All sizes</option>
                   {sizes.map((s) => (
@@ -664,7 +669,7 @@ export default function AdminDashboard() {
                   value={roomFilter}
                   onChange={(e) => setRoomFilter(e.target.value)}
                   aria-label="Filter status bilik"
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="rounded-2xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 min-h-[44px]"
                 >
                   <option value="ALL">Any room status</option>
                   <option value="assigned">Assigned</option>
@@ -676,7 +681,7 @@ export default function AdminDashboard() {
                   value={teamFilter}
                   onChange={(e) => setTeamFilter(e.target.value)}
                   aria-label="Filter status team"
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="rounded-2xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 min-h-[44px]"
                 >
                   <option value="ALL">Any team status</option>
                   <option value="assigned">Assigned</option>
@@ -687,9 +692,9 @@ export default function AdminDashboard() {
                 <a
                   href="/api/admin/export"
                   download
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-2xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900 transition-colors min-h-[44px]"
                 >
-                  <Download className="h-3.5 w-3.5" />
+                  <Download className="h-4 w-4" />
                   <span>Export CSV</span>
                 </a>
 
@@ -707,25 +712,26 @@ export default function AdminDashboard() {
                     });
                     setParticipantModalOpen(true);
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-2xl bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-[0.99] transition-all min-h-[44px]"
                 >
-                  <Plus className="h-3.5 w-3.5" />
+                  <Plus className="h-4 w-4" />
                   <span>Tambah Peserta</span>
                 </button>
               </div>
             </div>
 
-            {/* DIRECTORY TABLE (DESKTOP) */}
-            <div className="hidden md:block rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-              <table className="w-full text-left border-collapse">
+            {/* DIRECTORY TABLE (DESKTOP & IPAD LANDSCAPE >= 1024px / 1180px) */}
+            {/* Muat kemas tanpa horizontal scroll */}
+            <div className="hidden lg:block rounded-3xl border border-slate-200 bg-white shadow-xs overflow-hidden">
+              <table className="w-full text-left border-collapse table-fixed">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    <th className="py-3 px-5">Participant</th>
-                    <th className="py-3 px-4 text-center">Size</th>
-                    <th className="py-3 px-4">Room</th>
-                    <th className="py-3 px-4">Team</th>
-                    <th className="py-3 px-4">Remarks</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
+                  <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
+                    <th className="py-3.5 px-5 w-[28%]">Participant</th>
+                    <th className="py-3.5 px-3 text-center w-[10%]">Size</th>
+                    <th className="py-3.5 px-3 w-[22%]">Room</th>
+                    <th className="py-3.5 px-3 w-[22%]">Team</th>
+                    <th className="py-3.5 px-3 w-[10%]">Remarks</th>
+                    <th className="py-3.5 px-4 text-right w-[8%]">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -742,11 +748,11 @@ export default function AdminDashboard() {
                       return (
                         <tr
                           key={p.id}
-                          className="hover:bg-slate-50/60 transition-colors group"
+                          className="hover:bg-slate-50/70 transition-colors group"
                         >
                           {/* Participant Name & IC */}
-                          <td className="py-3.5 px-5">
-                            <div className="font-semibold text-slate-900">
+                          <td className="py-3.5 px-5 truncate">
+                            <div className="font-bold text-slate-900 truncate">
                               {p.name}
                             </div>
                             <div className="text-xs text-slate-400 font-mono tracking-wide mt-0.5">
@@ -755,24 +761,24 @@ export default function AdminDashboard() {
                           </td>
 
                           {/* Size */}
-                          <td className="py-3.5 px-4 text-center">
+                          <td className="py-3.5 px-3 text-center">
                             <span
-                              className="inline-block rounded-md px-2 py-0.5 text-xs font-bold text-white shadow-xs"
+                              className="inline-block rounded-lg px-2.5 py-1 text-xs font-extrabold text-white shadow-xs"
                               style={{ backgroundColor: getSizeBadgeColor(p.size) }}
                             >
                               {p.size}
                             </span>
                           </td>
 
-                          {/* Room Dropdown (Quick Allocation) */}
-                          <td className="py-3.5 px-4">
+                          {/* Room Dropdown (Quick Allocation - min-h-[44px]) */}
+                          <td className="py-3.5 px-3">
                             <select
                               value={p.roomId || ""}
                               onChange={(e) =>
                                 handleQuickAllocate(p.id, "roomId", e.target.value)
                               }
                               aria-label={`Pilih bilik untuk ${p.name}`}
-                              className="rounded-lg border border-slate-200 bg-white py-1.5 px-2.5 text-xs font-medium text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 max-w-[180px]"
+                              className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px]"
                             >
                               <option value="">Room (Belum)</option>
                               {rooms.map((r) => {
@@ -792,15 +798,15 @@ export default function AdminDashboard() {
                             </select>
                           </td>
 
-                          {/* Team Dropdown (Quick Allocation) */}
-                          <td className="py-3.5 px-4">
+                          {/* Team Dropdown (Quick Allocation - min-h-[44px]) */}
+                          <td className="py-3.5 px-3">
                             <select
                               value={p.teamId || ""}
                               onChange={(e) =>
                                 handleQuickAllocate(p.id, "teamId", e.target.value)
                               }
                               aria-label={`Pilih kumpulan untuk ${p.name}`}
-                              className="rounded-lg border border-slate-200 bg-white py-1.5 px-2.5 text-xs font-medium text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 max-w-[180px]"
+                              className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[44px]"
                             >
                               <option value="">Team (Belum)</option>
                               {teams.map((t) => {
@@ -821,13 +827,13 @@ export default function AdminDashboard() {
                           </td>
 
                           {/* Remarks */}
-                          <td className="py-3.5 px-4 text-xs text-slate-500 max-w-[200px] truncate">
+                          <td className="py-3.5 px-3 text-xs text-slate-500 truncate" title={p.remarks || ""}>
                             {p.remarks || "-"}
                           </td>
 
-                          {/* Actions */}
+                          {/* Actions (min-h-[44px] touch target) */}
                           <td className="py-3.5 px-4 text-right">
-                            <div className="inline-flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                            <div className="inline-flex items-center gap-1">
                               <button
                                 onClick={() => {
                                   setEditingParticipant(p);
@@ -842,7 +848,8 @@ export default function AdminDashboard() {
                                   setParticipantModalOpen(true);
                                 }}
                                 title="Edit Peserta"
-                                className="p-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-colors"
+                                aria-label={`Edit ${p.name}`}
+                                className="h-10 w-10 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-slate-100 flex items-center justify-center transition-colors"
                               >
                                 <Edit2 className="h-4 w-4" />
                               </button>
@@ -855,7 +862,8 @@ export default function AdminDashboard() {
                                   })
                                 }
                                 title="Padam Peserta"
-                                className="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-slate-100 transition-colors"
+                                aria-label={`Padam ${p.name}`}
+                                className="h-10 w-10 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-slate-100 flex items-center justify-center transition-colors"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </button>
@@ -869,10 +877,10 @@ export default function AdminDashboard() {
               </table>
             </div>
 
-            {/* DIRECTORY CARDS (MOBILE < 768px / 360px) */}
-            <div className="block md:hidden space-y-3">
+            {/* DIRECTORY 2-COLUMN CARDS (IPAD PORTRAIT 768px – 1023px) */}
+            <div className="hidden md:grid md:grid-cols-2 lg:hidden gap-3.5">
               {filteredParticipants.length === 0 ? (
-                <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400">
+                <div className="col-span-2 rounded-3xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400">
                   {loading
                     ? "Memuat senarai peserta..."
                     : "Tiada peserta yang sepadan dengan carian."}
@@ -881,29 +889,167 @@ export default function AdminDashboard() {
                 filteredParticipants.map((p) => (
                   <div
                     key={p.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs"
+                    className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xs flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
+                        <div>
+                          <h2 className="font-bold text-slate-900 text-sm leading-snug">
+                            {p.name}
+                          </h2>
+                          <span className="text-xs text-slate-400 font-mono mt-0.5 block">
+                            {formatDisplayIC(p)}
+                          </span>
+                        </div>
+                        <span
+                          className="rounded-lg px-2.5 py-1 text-xs font-extrabold text-white shrink-0 shadow-xs"
+                          style={{ backgroundColor: getSizeBadgeColor(p.size) }}
+                        >
+                          {p.size}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2.5 my-3">
+                        <div>
+                          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-1">
+                            Bilik Penginapan
+                          </label>
+                          <select
+                            value={p.roomId || ""}
+                            onChange={(e) =>
+                              handleQuickAllocate(p.id, "roomId", e.target.value)
+                            }
+                            aria-label={`Pilih bilik tablet untuk ${p.name}`}
+                            className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
+                          >
+                            <option value="">Room (Belum Ditetapkan)</option>
+                            {rooms.map((r) => {
+                              const isCurrent = p.roomId === r.id;
+                              const isFull = r._count.participants >= r.capacity;
+                              return (
+                                <option
+                                  key={r.id}
+                                  value={r.id}
+                                  disabled={isFull && !isCurrent}
+                                >
+                                  {r.name} ({r._count.participants}/{r.capacity})
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-1">
+                            Kumpulan (Team)
+                          </label>
+                          <select
+                            value={p.teamId || ""}
+                            onChange={(e) =>
+                              handleQuickAllocate(p.id, "teamId", e.target.value)
+                            }
+                            aria-label={`Pilih kumpulan tablet untuk ${p.name}`}
+                            className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
+                          >
+                            <option value="">Team (Belum Ditetapkan)</option>
+                            {teams.map((t) => {
+                              const isCurrent = p.teamId === t.id;
+                              const isFull = t._count.participants >= t.capacity;
+                              return (
+                                <option
+                                  key={t.id}
+                                  value={t.id}
+                                  disabled={isFull && !isCurrent}
+                                >
+                                  {t.name} ({t._count.participants}/{t.capacity})
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+
+                      {p.remarks && (
+                        <div className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl mb-3">
+                          <span className="font-bold text-slate-700">Catatan: </span>
+                          {p.remarks}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                      <button
+                        onClick={() => {
+                          setEditingParticipant(p);
+                          setParticipantForm({
+                            name: p.name,
+                            ic: p.ic || "",
+                            size: p.size,
+                            roomId: p.roomId || "",
+                            teamId: p.teamId || "",
+                            remarks: p.remarks || "",
+                          });
+                          setParticipantModalOpen(true);
+                        }}
+                        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 min-h-[44px]"
+                      >
+                        <Edit2 className="h-3.5 w-3.5" />
+                        <span>Edit</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          setDeleteConfirm({
+                            type: "participant",
+                            id: p.id,
+                            name: p.name,
+                          })
+                        }
+                        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 min-h-[44px]"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                        <span>Padam</span>
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* DIRECTORY CARDS (MOBILE PHONE < 768px / 360–390px) */}
+            <div className="block md:hidden space-y-3">
+              {filteredParticipants.length === 0 ? (
+                <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400">
+                  {loading
+                    ? "Memuat senarai peserta..."
+                    : "Tiada peserta yang sepadan dengan carian."}
+                </div>
+              ) : (
+                filteredParticipants.map((p) => (
+                  <div
+                    key={p.id}
+                    className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xs"
                   >
                     <div className="flex items-start justify-between gap-2 pb-3 border-b border-slate-100">
                       <div>
-                        <h2 className="font-semibold text-slate-900 text-sm leading-snug">
+                        <h2 className="font-bold text-slate-900 text-sm leading-snug">
                           {p.name}
                         </h2>
-                        <span className="text-xs text-slate-400 font-mono">
+                        <span className="text-xs text-slate-400 font-mono mt-0.5 block">
                           {formatDisplayIC(p)}
                         </span>
                       </div>
                       <span
-                        className="rounded-md px-2 py-0.5 text-xs font-bold text-white shrink-0"
+                        className="rounded-lg px-2.5 py-1 text-xs font-extrabold text-white shrink-0 shadow-xs"
                         style={{ backgroundColor: getSizeBadgeColor(p.size) }}
                       >
                         {p.size}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 my-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 my-3">
                       <div>
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                          Bilik
+                        <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-1">
+                          Bilik Penginapan
                         </label>
                         <select
                           value={p.roomId || ""}
@@ -911,7 +1057,7 @@ export default function AdminDashboard() {
                             handleQuickAllocate(p.id, "roomId", e.target.value)
                           }
                           aria-label={`Pilih bilik mobile untuk ${p.name}`}
-                          className="w-full rounded-lg border border-slate-200 bg-white py-1.5 px-2 text-xs font-medium text-slate-800 shadow-xs"
+                          className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                         >
                           <option value="">Belum Ada Bilik</option>
                           {rooms.map((r) => {
@@ -931,8 +1077,8 @@ export default function AdminDashboard() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-                          Team
+                        <label className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block mb-1">
+                          Kumpulan (Team)
                         </label>
                         <select
                           value={p.teamId || ""}
@@ -940,7 +1086,7 @@ export default function AdminDashboard() {
                             handleQuickAllocate(p.id, "teamId", e.target.value)
                           }
                           aria-label={`Pilih kumpulan mobile untuk ${p.name}`}
-                          className="w-full rounded-lg border border-slate-200 bg-white py-1.5 px-2 text-xs font-medium text-slate-800 shadow-xs"
+                          className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-xs font-semibold text-slate-800 shadow-xs min-h-[44px]"
                         >
                           <option value="">Belum Ada Team</option>
                           {teams.map((t) => {
@@ -961,8 +1107,8 @@ export default function AdminDashboard() {
                     </div>
 
                     {p.remarks && (
-                      <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg mb-3">
-                        <span className="font-semibold text-slate-600">Catatan: </span>
+                      <div className="text-xs text-slate-500 bg-slate-50 p-2.5 rounded-xl mb-3">
+                        <span className="font-bold text-slate-700">Catatan: </span>
                         {p.remarks}
                       </div>
                     )}
@@ -981,9 +1127,9 @@ export default function AdminDashboard() {
                           });
                           setParticipantModalOpen(true);
                         }}
-                        className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200"
+                        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 min-h-[44px]"
                       >
-                        <Edit2 className="h-3 w-3" />
+                        <Edit2 className="h-3.5 w-3.5" />
                         <span>Edit</span>
                       </button>
                       <button
@@ -994,9 +1140,9 @@ export default function AdminDashboard() {
                             name: p.name,
                           })
                         }
-                        className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-rose-600 bg-rose-50 hover:bg-rose-100"
+                        className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 min-h-[44px]"
                       >
-                        <Trash2 className="h-3 w-3" />
+                        <Trash2 className="h-3.5 w-3.5" />
                         <span>Padam</span>
                       </button>
                     </div>
@@ -1007,12 +1153,12 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* TAB 2: ROOMS */}
+        {/* TAB 2: ROOMS (2-3 Kolum pada Tablet & Desktop) */}
         {activeTab === "rooms" && (
           <div>
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-bold text-slate-900">Pengurusan Bilik</h2>
+                <h2 className="text-lg font-extrabold text-slate-900">Pengurusan Bilik</h2>
                 <p className="text-xs text-slate-500">
                   Urus kuota dan lihat senarai penghuni bilik penginapan peserta.
                 </p>
@@ -1023,9 +1169,9 @@ export default function AdminDashboard() {
                   setRoomForm({ name: "", capacity: 4 });
                   setRoomModalOpen(true);
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-2xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-colors min-h-[44px] self-start sm:self-auto"
               >
-                <Plus className="h-3.5 w-3.5" />
+                <Plus className="h-4 w-4" />
                 <span>Tambah Bilik</span>
               </button>
             </div>
@@ -1039,17 +1185,17 @@ export default function AdminDashboard() {
                 return (
                   <div
                     key={r.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between"
+                    className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-bold text-slate-900 text-base">
+                          <h3 className="font-extrabold text-slate-900 text-base">
                             {r.name}
                           </h3>
                           <div className="mt-1 flex items-center gap-2">
                             <span
-                              className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                              className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-extrabold ${
                                 isFull
                                   ? "bg-rose-100 text-rose-700"
                                   : "bg-emerald-100 text-emerald-700"
@@ -1057,7 +1203,7 @@ export default function AdminDashboard() {
                             >
                               {isFull ? "Penuh" : "Ada Kekosongan"}
                             </span>
-                            <span className="text-xs font-semibold text-slate-600">
+                            <span className="text-xs font-bold text-slate-600">
                               {count} / {r.capacity} orang
                             </span>
                           </div>
@@ -1071,7 +1217,7 @@ export default function AdminDashboard() {
                               setRoomModalOpen(true);
                             }}
                             title="Edit Bilik"
-                            className="p-1.5 text-slate-400 hover:text-blue-600 rounded-lg hover:bg-slate-50"
+                            className="h-10 w-10 text-slate-400 hover:text-blue-600 rounded-xl hover:bg-slate-50 flex items-center justify-center transition-colors"
                           >
                             <Edit2 className="h-4 w-4" />
                           </button>
@@ -1084,7 +1230,7 @@ export default function AdminDashboard() {
                               })
                             }
                             title="Padam Bilik"
-                            className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-50"
+                            className="h-10 w-10 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-slate-50 flex items-center justify-center transition-colors"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -1092,7 +1238,7 @@ export default function AdminDashboard() {
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="mt-3 h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                      <div className="mt-3.5 h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-300 ${
                             isFull ? "bg-rose-500" : "bg-indigo-500"
@@ -1103,7 +1249,7 @@ export default function AdminDashboard() {
 
                       {/* Members List */}
                       <div className="mt-4 border-t border-slate-100 pt-3">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                        <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block mb-2">
                           Penghuni Bilik ({count}):
                         </span>
                         {r.participants.length === 0 ? (
@@ -1111,17 +1257,17 @@ export default function AdminDashboard() {
                             Belum ada peserta yang diagihkan ke bilik ini.
                           </p>
                         ) : (
-                          <div className="space-y-1.5">
+                          <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
                             {r.participants.map((p) => (
                               <div
                                 key={p.id}
-                                className="flex items-center justify-between text-xs rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700"
+                                className="flex items-center justify-between text-xs rounded-xl bg-slate-50 px-3 py-2 text-slate-700 min-h-[36px]"
                               >
-                                <span className="font-medium truncate mr-2">
+                                <span className="font-semibold truncate mr-2">
                                   {p.name}
                                 </span>
                                 <span
-                                  className="rounded px-1.5 py-0.5 text-[10px] font-bold text-white shrink-0"
+                                  className="rounded-md px-2 py-0.5 text-[10px] font-extrabold text-white shrink-0"
                                   style={{
                                     backgroundColor: getSizeBadgeColor(p.size),
                                   }}
@@ -1141,12 +1287,12 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* TAB 3: TEAMS */}
+        {/* TAB 3: TEAMS (2-3 Kolum pada Tablet & Desktop) */}
         {activeTab === "teams" && (
           <div>
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg font-bold text-slate-900">
+                <h2 className="text-lg font-extrabold text-slate-900">
                   Pengurusan Kumpulan (Teams)
                 </h2>
                 <p className="text-xs text-slate-500">
@@ -1159,9 +1305,9 @@ export default function AdminDashboard() {
                   setTeamForm({ name: "", color: "#ef4444", capacity: 7 });
                   setTeamModalOpen(true);
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-2xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-colors min-h-[44px] self-start sm:self-auto"
               >
-                <Plus className="h-3.5 w-3.5" />
+                <Plus className="h-4 w-4" />
                 <span>Tambah Team</span>
               </button>
             </div>
@@ -1175,23 +1321,23 @@ export default function AdminDashboard() {
                 return (
                   <div
                     key={t.id}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between"
+                    className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xs flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-start justify-between">
                         <div>
                           <div className="flex items-center gap-2">
                             <span
-                              className="h-3.5 w-3.5 rounded-full inline-block shadow-xs"
+                              className="h-4 w-4 rounded-full inline-block shadow-xs shrink-0"
                               style={{ backgroundColor: t.color }}
                             />
-                            <h3 className="font-bold text-slate-900 text-base">
+                            <h3 className="font-extrabold text-slate-900 text-base">
                               {t.name}
                             </h3>
                           </div>
                           <div className="mt-1 flex items-center gap-2">
                             <span
-                              className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                              className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-extrabold ${
                                 isFull
                                   ? "bg-rose-100 text-rose-700"
                                   : "bg-emerald-100 text-emerald-700"
@@ -1199,7 +1345,7 @@ export default function AdminDashboard() {
                             >
                               {isFull ? "Penuh" : "Ada Kekosongan"}
                             </span>
-                            <span className="text-xs font-semibold text-slate-600">
+                            <span className="text-xs font-bold text-slate-600">
                               {count} / {t.capacity} orang
                             </span>
                           </div>
@@ -1217,7 +1363,7 @@ export default function AdminDashboard() {
                               setTeamModalOpen(true);
                             }}
                             title="Edit Team"
-                            className="p-1.5 text-slate-400 hover:text-blue-600 rounded-lg hover:bg-slate-50"
+                            className="h-10 w-10 text-slate-400 hover:text-blue-600 rounded-xl hover:bg-slate-50 flex items-center justify-center transition-colors"
                           >
                             <Edit2 className="h-4 w-4" />
                           </button>
@@ -1230,7 +1376,7 @@ export default function AdminDashboard() {
                               })
                             }
                             title="Padam Team"
-                            className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-50"
+                            className="h-10 w-10 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-slate-50 flex items-center justify-center transition-colors"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -1238,7 +1384,7 @@ export default function AdminDashboard() {
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="mt-3 h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                      <div className="mt-3.5 h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all duration-300"
                           style={{
@@ -1250,7 +1396,7 @@ export default function AdminDashboard() {
 
                       {/* Members List */}
                       <div className="mt-4 border-t border-slate-100 pt-3">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                        <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 block mb-2">
                           Ahli Kumpulan ({count}):
                         </span>
                         {t.participants.length === 0 ? (
@@ -1258,17 +1404,17 @@ export default function AdminDashboard() {
                             Belum ada peserta yang diagihkan ke kumpulan ini.
                           </p>
                         ) : (
-                          <div className="space-y-1.5">
+                          <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
                             {t.participants.map((p) => (
                               <div
                                 key={p.id}
-                                className="flex items-center justify-between text-xs rounded-lg bg-slate-50 px-2.5 py-1 text-slate-700"
+                                className="flex items-center justify-between text-xs rounded-xl bg-slate-50 px-3 py-2 text-slate-700 min-h-[36px]"
                               >
-                                <span className="font-medium truncate mr-2">
+                                <span className="font-semibold truncate mr-2">
                                   {p.name}
                                 </span>
                                 <span
-                                  className="rounded px-1.5 py-0.5 text-[10px] font-bold text-white shrink-0"
+                                  className="rounded-md px-2 py-0.5 text-[10px] font-extrabold text-white shrink-0"
                                   style={{
                                     backgroundColor: getSizeBadgeColor(p.size),
                                   }}
@@ -1288,13 +1434,13 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* TAB 4: SETTINGS (Saiz Baju & Konfigurasi) */}
+        {/* TAB 4: SETTINGS */}
         {activeTab === "settings" && (
           <div className="space-y-6">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900">
+                  <h2 className="text-lg font-extrabold text-slate-900">
                     Tetapan Saiz Baju
                   </h2>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -1311,9 +1457,9 @@ export default function AdminDashboard() {
                     });
                     setSizeModalOpen(true);
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 transition-colors self-start sm:self-auto"
+                  className="inline-flex items-center gap-1.5 rounded-2xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 transition-colors min-h-[44px] self-start sm:self-auto"
                 >
-                  <Plus className="h-3.5 w-3.5" />
+                  <Plus className="h-4 w-4" />
                   <span>Tambah Saiz Baru</span>
                 </button>
               </div>
@@ -1322,17 +1468,17 @@ export default function AdminDashboard() {
                 {sizes.map((s) => (
                   <div
                     key={s.id}
-                    className="flex items-center justify-between p-3 rounded-xl border border-slate-200/80 bg-slate-50/50"
+                    className="flex items-center justify-between p-3.5 rounded-2xl border border-slate-200/80 bg-slate-50/50 min-h-[52px]"
                   >
                     <div className="flex items-center gap-3">
                       <span
-                        className="rounded-lg px-2.5 py-1 text-xs font-bold text-white shadow-xs"
+                        className="rounded-xl px-3 py-1.5 text-xs font-extrabold text-white shadow-xs"
                         style={{ backgroundColor: s.color }}
                       >
                         {s.name}
                       </span>
-                      <span className="text-xs text-slate-500 font-mono">
-                        Susunan #{s.sortOrder}
+                      <span className="text-xs text-slate-500 font-mono font-semibold">
+                        #{s.sortOrder}
                       </span>
                     </div>
 
@@ -1347,10 +1493,10 @@ export default function AdminDashboard() {
                           });
                           setSizeModalOpen(true);
                         }}
-                        className="p-1 text-slate-400 hover:text-blue-600 rounded-md"
+                        className="h-10 w-10 text-slate-400 hover:text-blue-600 rounded-xl flex items-center justify-center transition-colors"
                         title="Edit Saiz"
                       >
-                        <Edit2 className="h-3.5 w-3.5" />
+                        <Edit2 className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() =>
@@ -1360,10 +1506,10 @@ export default function AdminDashboard() {
                             name: `Saiz ${s.name}`,
                           })
                         }
-                        className="p-1 text-slate-400 hover:text-rose-600 rounded-md"
+                        className="h-10 w-10 text-slate-400 hover:text-rose-600 rounded-xl flex items-center justify-center transition-colors"
                         title="Padam Saiz"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
                   </div>
@@ -1372,48 +1518,48 @@ export default function AdminDashboard() {
             </div>
 
             {/* System Info */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-              <h2 className="text-base font-bold text-slate-900 mb-2">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
+              <h2 className="text-base font-extrabold text-slate-900 mb-2">
                 Maklumat Sistem & Pangkalan Data
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600">
-                <div className="rounded-xl bg-slate-50 p-3.5 border border-slate-100">
-                  <span className="font-semibold text-slate-700 block mb-1">
+                <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
+                  <span className="font-bold text-slate-700 block mb-1">
                     Lokasi DB (Coolify / Docker Volume)
                   </span>
-                  <code className="text-blue-600 font-mono">/app/data/app.db</code>
+                  <code className="text-blue-600 font-mono font-bold">/app/data/app.db</code>
                 </div>
-                <div className="rounded-xl bg-slate-50 p-3.5 border border-slate-100">
-                  <span className="font-semibold text-slate-700 block mb-1">
+                <div className="rounded-2xl bg-slate-50 p-4 border border-slate-100">
+                  <span className="font-bold text-slate-700 block mb-1">
                     Mod Keselamatan Sesi
                   </span>
-                  <span>Cookie httpOnly bertandatangan HMAC-SHA256</span>
+                  <span className="font-medium">Cookie httpOnly bertandatangan HMAC-SHA256</span>
                 </div>
               </div>
             </div>
           </div>
         )}
-      </div>
+      </main>
 
       {/* MODAL: Tambah / Edit Peserta */}
       {participantModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+          <div className="w-full max-w-lg rounded-3xl bg-white p-6 sm:p-7 shadow-2xl animate-in fade-in zoom-in-95 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-lg font-extrabold text-slate-900">
                 {editingParticipant ? "Kemaskini Peserta" : "Daftar Peserta Baru"}
               </h3>
               <button
                 onClick={() => setParticipantModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 h-10 w-10 rounded-xl flex items-center justify-center"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <form onSubmit={handleParticipantSubmit} className="mt-4 space-y-3.5">
+            <form onSubmit={handleParticipantSubmit} className="mt-4 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Nama Penuh *
                 </label>
                 <input
@@ -1424,22 +1570,22 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setParticipantForm({ ...participantForm, name: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   No. Kad Pengenalan (IC)
                 </label>
                 <input
                   type="text"
-                  placeholder="Contoh: 021020011763 atau 021020-01-1763 (Kosongkan jika bukan warganegara)"
+                  placeholder="Contoh: 021020011763 (Kosongkan jika bukan warganegara)"
                   value={participantForm.ic}
                   onChange={(e) =>
                     setParticipantForm({ ...participantForm, ic: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
                 <span className="text-[11px] text-slate-400 mt-1 block">
                   Boleh ditaip dengan atau tanpa tanda sempang (-).
@@ -1447,7 +1593,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Saiz Baju *
                 </label>
                 <select
@@ -1455,7 +1601,7 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setParticipantForm({ ...participantForm, size: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 >
                   {sizes.map((s) => (
                     <option key={s.id} value={s.name}>
@@ -1467,7 +1613,7 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
                     Bilik Penginapan
                   </label>
                   <select
@@ -1475,7 +1621,7 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setParticipantForm({ ...participantForm, roomId: e.target.value })
                     }
-                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full rounded-2xl border border-slate-300 px-3.5 py-3 text-sm font-semibold text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                   >
                     <option value="">Belum Ditetapkan</option>
                     {rooms.map((r) => {
@@ -1496,7 +1642,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
                     Kumpulan (Team)
                   </label>
                   <select
@@ -1504,7 +1650,7 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setParticipantForm({ ...participantForm, teamId: e.target.value })
                     }
-                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full rounded-2xl border border-slate-300 px-3.5 py-3 text-sm font-semibold text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                   >
                     <option value="">Belum Ditetapkan</option>
                     {teams.map((t) => {
@@ -1526,7 +1672,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Catatan / Remarks
                 </label>
                 <textarea
@@ -1536,7 +1682,7 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setParticipantForm({ ...participantForm, remarks: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
@@ -1544,13 +1690,13 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setParticipantModalOpen(false)}
-                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 min-h-[44px]"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700"
+                  className="rounded-2xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 min-h-[44px]"
                 >
                   Simpan Peserta
                 </button>
@@ -1563,14 +1709,14 @@ export default function AdminDashboard() {
       {/* MODAL: Tambah / Edit Bilik */}
       {roomModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-lg font-extrabold text-slate-900">
                 {editingRoom ? "Kemaskini Bilik" : "Tambah Bilik Baru"}
               </h3>
               <button
                 onClick={() => setRoomModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 h-10 w-10 rounded-xl flex items-center justify-center"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -1578,7 +1724,7 @@ export default function AdminDashboard() {
 
             <form onSubmit={handleRoomSubmit} className="mt-4 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Nama Bilik *
                 </label>
                 <input
@@ -1589,12 +1735,12 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setRoomForm({ ...roomForm, name: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Kapasiti Maksimum (Orang) *
                 </label>
                 <input
@@ -1608,7 +1754,7 @@ export default function AdminDashboard() {
                       capacity: parseInt(e.target.value, 10) || 1,
                     })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
@@ -1616,13 +1762,13 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setRoomModalOpen(false)}
-                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 min-h-[44px]"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700"
+                  className="rounded-2xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 min-h-[44px]"
                 >
                   Simpan Bilik
                 </button>
@@ -1635,14 +1781,14 @@ export default function AdminDashboard() {
       {/* MODAL: Tambah / Edit Team */}
       {teamModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-lg font-extrabold text-slate-900">
                 {editingTeam ? "Kemaskini Kumpulan" : "Tambah Kumpulan Baru"}
               </h3>
               <button
                 onClick={() => setTeamModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 h-10 w-10 rounded-xl flex items-center justify-center"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -1650,7 +1796,7 @@ export default function AdminDashboard() {
 
             <form onSubmit={handleTeamSubmit} className="mt-4 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Nama Kumpulan *
                 </label>
                 <input
@@ -1661,12 +1807,12 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setTeamForm({ ...teamForm, name: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Warna Lencana / Tema *
                 </label>
                 <div className="flex items-center gap-3">
@@ -1676,7 +1822,7 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setTeamForm({ ...teamForm, color: e.target.value })
                     }
-                    className="h-10 w-12 rounded-lg border border-slate-300 p-1 cursor-pointer"
+                    className="h-11 w-14 rounded-xl border border-slate-300 p-1 cursor-pointer"
                   />
                   <input
                     type="text"
@@ -1684,13 +1830,13 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setTeamForm({ ...teamForm, color: e.target.value })
                     }
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm font-mono text-slate-900"
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-mono text-slate-900 min-h-[46px]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Kapasiti Maksimum Ahli *
                 </label>
                 <input
@@ -1704,7 +1850,7 @@ export default function AdminDashboard() {
                       capacity: parseInt(e.target.value, 10) || 1,
                     })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
@@ -1712,13 +1858,13 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setTeamModalOpen(false)}
-                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 min-h-[44px]"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700"
+                  className="rounded-2xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 min-h-[44px]"
                 >
                   Simpan Kumpulan
                 </button>
@@ -1731,14 +1877,14 @@ export default function AdminDashboard() {
       {/* MODAL: Tambah / Edit Saiz Baju */}
       {sizeModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-lg font-extrabold text-slate-900">
                 {editingSize ? "Kemaskini Saiz Baju" : "Tambah Saiz Baju Baru"}
               </h3>
               <button
                 onClick={() => setSizeModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
+                className="text-slate-400 hover:text-slate-600 h-10 w-10 rounded-xl flex items-center justify-center"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -1746,7 +1892,7 @@ export default function AdminDashboard() {
 
             <form onSubmit={handleSizeSubmit} className="mt-4 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Nama Saiz *
                 </label>
                 <input
@@ -1757,13 +1903,13 @@ export default function AdminDashboard() {
                   onChange={(e) =>
                     setSizeForm({ ...sizeForm, name: e.target.value })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm uppercase text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm uppercase text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
-                  Warna Badge *
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Warna Lencana *
                 </label>
                 <div className="flex items-center gap-3">
                   <input
@@ -1772,7 +1918,7 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setSizeForm({ ...sizeForm, color: e.target.value })
                     }
-                    className="h-10 w-12 rounded-lg border border-slate-300 p-1 cursor-pointer"
+                    className="h-11 w-14 rounded-xl border border-slate-300 p-1 cursor-pointer"
                   />
                   <input
                     type="text"
@@ -1780,13 +1926,13 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setSizeForm({ ...sizeForm, color: e.target.value })
                     }
-                    className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm font-mono text-slate-900"
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-2.5 text-sm font-mono text-slate-900 min-h-[46px]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-xs font-bold text-slate-700 mb-1">
                   Nombor Turutan Susunan (Sort Order)
                 </label>
                 <input
@@ -1798,7 +1944,7 @@ export default function AdminDashboard() {
                       sortOrder: parseInt(e.target.value, 10) || 1,
                     })
                   }
-                  className="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 min-h-[46px]"
                 />
               </div>
 
@@ -1806,13 +1952,13 @@ export default function AdminDashboard() {
                 <button
                   type="button"
                   onClick={() => setSizeModalOpen(false)}
-                  className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                  className="rounded-2xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 min-h-[44px]"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-blue-700"
+                  className="rounded-2xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-blue-700 min-h-[44px]"
                 >
                   Simpan Saiz
                 </button>
@@ -1825,29 +1971,29 @@ export default function AdminDashboard() {
       {/* MODAL: Pengesahan Padam */}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl animate-in fade-in zoom-in-95 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 text-rose-600 mb-3">
-              <Trash2 className="h-6 w-6" />
+          <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 text-center">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 mb-3">
+              <Trash2 className="h-7 w-7" />
             </div>
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 className="text-base font-extrabold text-slate-900">
               Sahkan Padam?
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
               Adakah anda pasti mahu memadam{" "}
               <strong className="text-slate-800">&quot;{deleteConfirm.name}&quot;</strong>?
               Tindakan ini tidak boleh dikembalikan.
             </p>
 
-            <div className="mt-5 flex items-center justify-center gap-2">
+            <div className="mt-6 flex items-center justify-center gap-2.5">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                className="rounded-2xl border border-slate-200 px-5 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 min-h-[44px]"
               >
                 Batal
               </button>
               <button
                 onClick={executeDelete}
-                className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-rose-700"
+                className="rounded-2xl bg-rose-600 px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-rose-700 min-h-[44px]"
               >
                 Ya, Padam
               </button>

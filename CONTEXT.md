@@ -31,3 +31,7 @@ _Avoid_: Assignment, Penempatan
 **Shirt Size**:
 Pilihan saiz pakaian rasmi acara dengan konfigurasi warna lencana (badge) dan urutan susunan.
 _Avoid_: Ukuran, T-Shirt Option
+
+**Urusetia**:
+Akses dan panel pengurusan bagi pihak penganjur untuk menyelia agihan bilik, kumpulan aktiviti, dan direktori peserta.
+_Avoid_: Admin, Pengurus, Staff

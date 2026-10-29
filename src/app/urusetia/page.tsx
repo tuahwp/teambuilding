@@ -2,7 +2,6 @@ import AdminDashboard from "@/components/AdminDashboard";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminPage() {
+export default function UrusetiaPage() {
   return <AdminDashboard />;
 }
-
