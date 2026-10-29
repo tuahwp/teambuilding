@@ -1,6 +1,6 @@
 # Stage 1: Base
 FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 
 # Stage 2: Dependencies
@@ -43,8 +43,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy Prisma schema, migrations, seed, and CLI tools for migration on start
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=deps /app/node_modules/.bin /app/node_modules/.bin
-COPY --from=deps /app/node_modules/@prisma /app/node_modules/@prisma
-COPY --from=deps /app/node_modules/prisma /app/node_modules/prisma
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/@prisma /app/node_modules/@prisma
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/prisma /app/node_modules/prisma
 COPY --from=deps /app/node_modules/@types /app/node_modules/@types
 
 # Copy entrypoint script
